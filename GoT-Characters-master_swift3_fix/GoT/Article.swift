@@ -52,8 +52,7 @@ class Article: NSObject, NSCoding {
     func imageFromThumbnailData() -> UIImage? {
         return self.thumbnailData.flatMap { UIImage(data: $0) }
     }
-
-
+    
     func encode(with aCoder: NSCoder) {
         aCoder.encode(self.privateIdentifier, forKey: Article.kArticleIdentifier)
         aCoder.encode(self.privateTitle, forKey: Article.kArticleTitle)
@@ -63,25 +62,21 @@ class Article: NSObject, NSCoding {
         aCoder.encode(self.privateUrlString, forKey: Article.kArticleURL)
     }
 
-    required convenience init?(coder aDecoder: NSCoder) {
-       // super.init()
-        
+    required init?(coder aDecoder: NSCoder) {
+    
         guard let identifier = aDecoder.decodeObject(forKey: Article.kArticleIdentifier) as? String,
             let title = aDecoder.decodeObject(forKey: Article.kArticleTitle) as? String,
             let abstract = aDecoder.decodeObject(forKey: Article.kArticleAbstract) as? String,
             let thumbnailURLString = aDecoder.decodeObject(forKey: Article.kArticleThumbnailURL) as? String,
             let URLstring = aDecoder.decodeObject(forKey: Article.kArticleURL) as? String
             else { return nil }
-       
-        self.init(
-            identifier: identifier,
-            title: title,
-            abstract: abstract,
-            urlString: URLstring,
-            thumbnailURLString: thumbnailURLString
-        )
+        self.privateIdentifier = identifier
+        self.privateTitle = title
+        self.privateAbstract = abstract
+        self.privateUrlString = URLstring
+        self.privateThumbnailURLString = thumbnailURLString
         self.thumbnailData = aDecoder.decodeObject(forKey: Article.kArticleThumbnailData) as? Data
-
+        super.init()
     }
 
     var privateIdentifier: String
@@ -90,10 +85,3 @@ class Article: NSObject, NSCoding {
     var privateThumbnailURLString: String
     var privateUrlString: String
 }
-//
-//  Article.m
-//  GoT
-//
-//  Created by Paciej on 25/10/15.
-//  Copyright © 2015 Maciej Piotrowski. All rights reserved.
-//
