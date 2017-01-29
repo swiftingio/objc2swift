@@ -21,7 +21,7 @@ class Loader: NSObject {
             let urlString: String = webserviceURLString + endpoint + query
             //TODO: use NSURLQueryItem  https://littlebitesofcocoa.com/128-nsurlqueryitem-nsurlcomponents
         guard let url = URLComponents(string: urlString)?.url else { return }
-         var task: URLSessionDataTask? = self.session.dataTask(with: url) { (data, response, error) in
+         let task: URLSessionDataTask? = self.session.dataTask(with: url) { (data, response, error) in
             if (error != nil) {
                 DispatchQueue.main.async {
                     print("loadAsynchronously error: \(error.debugDescription)")
@@ -29,7 +29,7 @@ class Loader: NSObject {
                 callback?(nil)
                 return
             }
-            var parsedObject: Any? = configuration.responseParsingBlock?(data!)
+            let parsedObject: Any? = configuration.responseParsingBlock?(data!)
             callback?(parsedObject)
         }
         task?.resume()

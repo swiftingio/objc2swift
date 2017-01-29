@@ -39,7 +39,7 @@ class MainViewController: UIViewController, UITableViewDelegate {
         tableView.register(FavouriteTableViewCell.self, forCellReuseIdentifier: dataSource.cellReuseIdentifier)
         view.addSubview(tableView)
         tableView.mas_makeConstraints { (_ make: MASConstraintMaker?) in
-            make?.edges.equalTo()(self.tableView.superview)
+            _ = make?.edges.equalTo()(self.tableView.superview)
         }
         dataSource.tableView = tableView
         dataSource.cellConfigureBlock = { [weak self](cell: UITableViewCell, indexPath: IndexPath, item: Article) in
@@ -49,7 +49,7 @@ class MainViewController: UIViewController, UITableViewDelegate {
             favCell.abstractLabel.text = item.abstract
             favCell.tag = indexPath.row
             favCell.favouriteButton.tag = indexPath.row
-            if let thumbnail = item.thumbnailData {
+            if item.thumbnailData != nil {
                 favCell.imageView?.image = item.imageFromThumbnailData()
             }
             favCell.favouriteButton.addTarget(strongSelf, action: #selector(strongSelf.favouriteButtonTapped), for: .touchUpInside)
@@ -78,17 +78,17 @@ class MainViewController: UIViewController, UITableViewDelegate {
         return 100.0
     }
     
-    func tableView(_ tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    @objc(tableView:willDisplayCell:forRowAtIndexPath:) func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let article = self.dataSource.item(at: indexPath) else {
             return
         }
         if article.thumbnailData == nil {
             var favouriteCell: FavouriteTableViewCell?
-            var tag: Int = indexPath.row
+            let tag: Int = indexPath.row
             if (cell is FavouriteTableViewCell) {
                 favouriteCell = (cell as? FavouriteTableViewCell)
             }
-            var configuration = AsyncLoadConfiguration.from(article)
+            let configuration = AsyncLoadConfiguration.from(article)
             self.loader.loadAsynchronously(configuration, callback: {(_ result: Any) -> Void in
                 if let data = result as? Data  {
                     article.thumbnailData = data
@@ -106,14 +106,14 @@ class MainViewController: UIViewController, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         guard let article = self.dataSource.item(at: indexPath) else { return }
-        var favourite: Bool = self.articlesRepository.isFavouriteArticle(article)
-        var viewController = Configurator.configuredDetailsViewController(with: article, favourite: favourite)
+        let favourite: Bool = self.articlesRepository.isFavouriteArticle(article)
+        let viewController = Configurator.configuredDetailsViewController(with: article, favourite: favourite)
         //self.showViewController(viewController, sender: self)
         self.show(viewController, sender: self)
     }
     
     func favouriteButtonTapped(_ sender: UIButton) {
-        var indexPath = IndexPath(row: sender.tag, section: 0)
+        let indexPath = IndexPath(row: sender.tag, section: 0)
         guard let article = self.dataSource.item(at: indexPath) else { return }
         if self.articlesRepository.isFavouriteArticle(article) {
             self.articlesRepository.removeFavouriteArticle(article)

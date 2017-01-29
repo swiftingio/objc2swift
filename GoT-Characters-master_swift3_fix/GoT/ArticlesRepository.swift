@@ -16,11 +16,8 @@ class ArticlesRepository {
     init(defaults: UserDefaults) {
         self.defaults = defaults
         self.temporaryArticles = Set<Article>()
-        self.articles = Set<Article>()
-        //self.articles = self.getFavouriteArticlesFromDefaults()
-        //self.articles = Set<Article>()
-        //super.init()
-        //TODO:
+        self.articles = Set<Article>() // That's an ugly cheat
+        self.articles = self.getFavouriteArticlesFromDefaults()
     }
 
     func savedFavouritesArticles() -> [Article] {
@@ -59,7 +56,7 @@ class ArticlesRepository {
 
 
     func saveFavouriteArticlesToDefaults() {
-        var archivedArticles = NSKeyedArchiver.archivedData(withRootObject: Array(articles))
+        let archivedArticles = NSKeyedArchiver.archivedData(withRootObject: Array(articles))
         self.defaults.set(archivedArticles, forKey: kSavedArticles)
         self.defaults.synchronize()
     }

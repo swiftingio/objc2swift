@@ -27,8 +27,8 @@ extension AsyncLoadConfiguration {
     class func from(_ article: Article) -> AsyncLoadConfiguration {
         return AsyncLoadConfiguration(responseParsingBlock: { (result) -> Any? in
             var data: Data?
-            if (result is Data) && (UIImage(data: result) != nil) {
-                data = (result as? Data)
+            if  (UIImage(data: result) != nil) {
+                data = result
             }
             return data!
         }, webserviceEndpoint: article.thumbnailURLString, webserviceQuery: nil)

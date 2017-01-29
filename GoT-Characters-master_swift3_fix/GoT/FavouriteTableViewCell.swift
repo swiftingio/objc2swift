@@ -34,21 +34,21 @@ class FavouriteTableViewCell: UITableViewCell {
         self.contentView.addSubview(self.privateFavouriteButton)
         
         self.privateTitleLabel.mas_makeConstraints({ (make: MASConstraintMaker?) -> Void in
-            make?.left.equalTo()(self.imageView?.mas_right)?.offset()(10)
-            make?.right.equalTo()(self.privateFavouriteButton.mas_left)?.offset()(-10)
-            make?.top.equalTo()(self.privateTitleLabel.superview)?.offset()(10)
+            _ = make?.left.equalTo()(self.imageView?.mas_right)?.offset()(10)
+            _ = make?.right.equalTo()(self.privateFavouriteButton.mas_left)?.offset()(-10)
+            _ = make?.top.equalTo()(self.privateTitleLabel.superview)?.offset()(10)
         })
         
         self.privateAbstractLabel.mas_makeConstraints({(make: MASConstraintMaker?) -> Void in
-            make?.top.equalTo()(self.privateTitleLabel.mas_bottom)?.offset()(10)
-            make?.left.right().equalTo()(self.privateTitleLabel)
-            make?.bottom.equalTo()(self.contentView)?.offset()(-10)
+            _ = make?.top.equalTo()(self.privateTitleLabel.mas_bottom)?.offset()(10)
+            _ = make?.left.right().equalTo()(self.privateTitleLabel)
+            _ = make?.bottom.equalTo()(self.contentView)?.offset()(-10)
         })
         
         self.privateFavouriteButton.mas_makeConstraints({ (make: MASConstraintMaker?) -> Void in
-            make?.width.and().height().equalTo()(40)
-            make?.right.equalTo()(self.privateFavouriteButton.superview)?.offset()(-10)
-            make?.centerY.equalTo()(self.privateFavouriteButton.superview)
+            _ = make?.width.and().height().equalTo()(40)
+            _ = make?.right.equalTo()(self.privateFavouriteButton.superview)?.offset()(-10)
+            _ = make?.centerY.equalTo()(self.privateFavouriteButton.superview)
         })
     
     }

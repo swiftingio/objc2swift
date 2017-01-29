@@ -9,10 +9,10 @@
 import Foundation
 class Configurator: NSObject {
     class func configuredMainViewController() -> MainViewController {
-        var asyncLoadConfiguration = Configurator.configuredCharactersAsyncLoadConfiguration()
-        var loader = Configurator.configuredLoader()
-        var repository = Configurator.configuredArticlesRepository()
-        var dataSource = Configurator.configuredArticlesDataSource()
+        let asyncLoadConfiguration = Configurator.configuredCharactersAsyncLoadConfiguration()
+        let loader = Configurator.configuredLoader()
+        let repository = Configurator.configuredArticlesRepository()
+        let dataSource = Configurator.configuredArticlesDataSource()
         return MainViewController(loader: loader, asyncLoadConfiguration: asyncLoadConfiguration, dataSource: dataSource, articlesRepository: repository)
     }
 
@@ -30,7 +30,7 @@ class Configurator: NSObject {
     }
 
     class func configuredLoader() -> Loader {
-        var session = URLSession(configuration: URLSessionConfiguration.default)
+        let session = URLSession(configuration: URLSessionConfiguration.default)
         return Loader(webserviceURLString: "", session: session)
     }
 
@@ -44,8 +44,8 @@ class Configurator: NSObject {
                     "server response.")
                 return nil
             }
-            var basePath: String? = (JSON[kArticleBaseURL] as? String)
-            var items: [[String : Any]] = (JSON[kItems] as? [[String : Any]]) ?? [[:]]
+            let basePath: String? = (JSON[kArticleBaseURL] as? String)
+            let items: [[String : Any]] = (JSON[kItems] as? [[String : Any]]) ?? [[:]]
             var articles = [Article]() /* capacity: items?.count */
             
             for item in items {

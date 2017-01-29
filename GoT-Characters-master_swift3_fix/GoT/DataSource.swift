@@ -44,7 +44,7 @@ class DataSource: NSObject, UITableViewDataSource {
 
     func item(at indexPath: IndexPath) -> Article? {
         var item: Article?
-        var index: Int = indexPath.row
+        let index: Int = indexPath.row
         if index < self.mutableItems.count {
             item = self.mutableItems[index]
         }
@@ -57,8 +57,8 @@ class DataSource: NSObject, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: self.cellReuseIdentifier, for: indexPath)
-        var item: Article? = self.item(at: indexPath)
+        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: self.cellReuseIdentifier, for: indexPath)
+        let item: Article? = self.item(at: indexPath)
         if let item = item {
             self.cellConfigureBlock?(cell, indexPath, item)
         }
