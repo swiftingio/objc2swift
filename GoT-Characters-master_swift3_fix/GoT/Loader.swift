@@ -14,11 +14,11 @@ class Loader: NSObject {
         super.init()
     }
 
-    func loadAsynchronously(_ configuration: AsyncLoadConfiguration, callback: ((Any?) -> Void)?) {        
-        guard let query = configuration.webserviceQuery else { return }
-        let endpoint = configuration.webserviceEndpoint
-        //"http://gameofthrones.wikia.com/api/v1/Articles/Top?expand=1&category=Characters&limit=5"
-            let urlString: String = webserviceURLString + endpoint + query
+    func loadAsynchronously(_ configuration: AsyncLoadConfiguration, callback: ((Any?) -> Void)?) {
+        var urlString: String = webserviceURLString + configuration.webserviceEndpoint
+        if let query = configuration.webserviceQuery {
+            urlString += query
+        }
             //TODO: use NSURLQueryItem  https://littlebitesofcocoa.com/128-nsurlqueryitem-nsurlcomponents
         guard let url = URLComponents(string: urlString)?.url else { return }
          let task: URLSessionDataTask? = self.session.dataTask(with: url) { (data, response, error) in

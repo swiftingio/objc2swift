@@ -89,7 +89,7 @@ class MainViewController: UIViewController, UITableViewDelegate {
                 favouriteCell = (cell as? FavouriteTableViewCell)
             }
             let configuration = AsyncLoadConfiguration.from(article)
-            self.loader.loadAsynchronously(configuration, callback: {(_ result: Any) -> Void in
+            self.loader.loadAsynchronously(configuration, callback: {(_ result: Any?) -> Void in
                 if let data = result as? Data  {
                     article.thumbnailData = data
                     DispatchQueue.main.async(execute: {() -> Void in
